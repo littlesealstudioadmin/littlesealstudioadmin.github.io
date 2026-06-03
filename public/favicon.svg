@@ -1,14 +1,18 @@
-<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 128 128">
-    <!-- 미니멀리즘 아기 물개 심볼: 코로 둥근 원(기술/아이디어)을 받치고 있는 형상 -->
-    <path d="M96 52c-2-8-9-14-17-14-11 0-18 10-15 22 2 11-3 24-13 30-10 6-23 5-33 1l2 7c11 3 24 2 34-4 12-7 19-21 16-35-1-6 2-14 10-14 6 0 11 4 12 9l4-4z" />
-    <!-- 지느러미 부분 -->
-    <path d="M62 76c-4 8-12 14-21 16l2 5c11-2 20-11 24-21h-5z" />
-    <!-- 코 위의 기술 구체 (Sphere) -->
-    <circle cx="101" cy="38" r="9" />
-    <style>
-        path, circle { fill: #000; }
-        @media (prefers-color-scheme: dark) {
-            path, circle { fill: #FFF; }
-        }
-    </style>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <rect width="128" height="128" rx="28" fill="#8ECDF4"/>
+
+  <circle cx="44" cy="50" r="5" fill="#111"/>
+
+  <path
+    d="M78 50 Q86 43 94 50"
+    fill="none"
+    stroke="#111"
+    stroke-width="5"
+    stroke-linecap="round"/>
+
+  <path
+    d="M64 58
+       C56 58 52 64 64 72
+       C76 64 72 58 64 58Z"
+    fill="#111"/>
 </svg>
