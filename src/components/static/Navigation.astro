@@ -21,9 +21,13 @@ const isCurrent = (href: string) => pathname === href;
           {/* Home */}
           <BreadcrumbItem>
             {isCurrent("/") ? (
-              <BreadcrumbPage>{site_config.homeLabel}</BreadcrumbPage>
+              <BreadcrumbPage className="flex items-center">
+                <img src="/app_logo.png" alt="리틀실스튜디오" class="h-6 w-auto inline-block" />
+              </BreadcrumbPage>
             ) : (
-              <BreadcrumbLink href="/">{site_config.homeLabel}</BreadcrumbLink>
+              <BreadcrumbLink href="/" className="flex items-center hover:opacity-80 transition-opacity">
+                <img src="/app_logo.png" alt="리틀실스튜디오" class="h-6 w-auto inline-block" />
+              </BreadcrumbLink>
             )}
           </BreadcrumbItem>
 
