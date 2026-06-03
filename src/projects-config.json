@@ -1,0 +1,31 @@
+[
+  {
+    "id": "project-id-template",
+    "data": {
+      "date": "03-06-2026",
+      "startDate": "시작일 (예: 2026.01)",
+      "endDate": "종료일 (예: 2026.05) 또는 비워둠",
+      "inProgress": false,
+      "category": "web",
+      "title": "여기에 프로젝트 제목을 입력하세요 (예: 차세대 사내 통합 ERP 시스템 구축)",
+      "description": "여기에 프로젝트 한 줄 소개를 요약하여 입력하세요.",
+      "tags": ["Spring Boot", "Oracle DB", "Web", "MyBatis"],
+      "status": "production"
+    },
+    "introduction": "여기에 프로젝트의 상세 소개글을 여러 줄로 자유롭게 입력하세요.\n이 프로젝트의 비즈니스 목적, 시스템 규모, 해결하고자 했던 기술적 난제와 가치 등을 적어주시면 좋습니다.",
+    "links": [
+      { "label": "github", "url": "https://github.com/your-username/repository" }
+    ],
+    "video": null,
+    "brief": {
+      "capabilities": [
+        "이 프로젝트에서 개발한 첫 번째 핵심 기능 또는 비즈니스 기여 사항을 입력하세요.",
+        "이 프로젝트에서 개발한 두 번째 핵심 기능 또는 비즈니스 기여 사항을 입력하세요."
+      ],
+      "architecture": [
+        "이 프로젝트에 설계된 백엔드/프레임워크 최적화 및 인프라 구성 사항을 입력하세요.",
+        "데이터베이스 설계 및 안정성 확보를 위한 트랜잭션, 쿼리 튜닝 등의 노하우를 입력하세요."
+      ]
+    }
+  }
+]

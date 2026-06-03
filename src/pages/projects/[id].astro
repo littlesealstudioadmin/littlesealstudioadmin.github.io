@@ -1,0 +1,68 @@
+---
+import projectsConfig from "@/projects-config.json";
+import { parse } from "date-fns";
+import IdHeader from "@/components/static/IdHeader.astro";
+import IdLayout from "@/layouts/IdLayout.astro";
+import ProjectGallery from "@/components/static/ProjectGallery.astro";
+import ProjectDetails from "@/components/static/ProjectDetails.astro";
+import type { ImageMetadata } from "astro";
+import type { projectConfig } from "@/lib/types";
+import { RiArrowRightUpLine, RiExternalLinkLine } from "@remixicon/react";
+
+export function getStaticPaths() {
+    return projectsConfig
+        .filter((item) => item.id !== "project-id-template")
+        .map((item) => ({
+            params: { id: item.id },
+            props: { item },
+        }));
+}
+
+const { item } = Astro.props;
+
+const allItems = projectsConfig
+    .filter((item) => item.id !== "project-id-template")
+    .sort((a, b) => {
+        const dateA = parse(a.data.date, "dd-MM-yyyy", new Date());
+        const dateB = parse(b.data.date, "dd-MM-yyyy", new Date());
+        return dateB.getTime() - dateA.getTime();
+    });
+
+const currentIndex = allItems.findIndex((i) => i.id === item.id);
+const prev = currentIndex > 0 ? allItems[currentIndex - 1] : null;
+const next = currentIndex < allItems.length - 1 ? allItems[currentIndex + 1] : null;
+
+const pubDate = parse(item.data.date, "dd-MM-yyyy", new Date());
+
+type ImageRecord = { default: ImageMetadata };
+const imageModules = import.meta.glob<ImageRecord>("@/assets/projects/*/*.{png,jpg,jpeg,webp,gif,avif}", { eager: true });
+const projectImages = Object.entries(imageModules)
+    .filter(([path]) => path.includes(`/assets/projects/${item.id}/`))
+    .sort(([a], [b]) => a.localeCompare(b))
+    .map(([, mod]) => mod.default);
+
+const links = item?.links ?? [];
+---
+
+<IdLayout type="projects" title={item.data.title} description={item.data.description} image={`/og/projects/${item.id}.png`} pubDate={pubDate} tags={item.data.tags} prev={prev} next={next}>
+    <article transition:animate="fade">
+        <IdHeader backUrl="/projects" items={item.data} />
+
+        <div class="mt-10">
+            {
+                links.length > 0 && (
+                    <div class="w-full flex flex-wrap p-3 border border-border border-b-0">
+                        <RiExternalLinkLine className="size-4 ml-3 my-auto text-secondary-foreground/90" />
+                        {links.map((link) => (
+                            <a href={link.url} target="_blank" rel="noopener noreferrer" class="ml-3 text-sm text-muted-foreground/80 hover:text-secondary-foreground/90 hover:underline underline-offset-3 hover:underline-offset-6 animation active:text-background active:bg-secondary-foreground px-1">
+                                {link.label}
+                            </a>
+                        ))}
+                    </div>
+                )
+            }
+            <ProjectGallery item={item as projectConfig} images={projectImages} />
+            <ProjectDetails item={item as projectConfig} />
+        </div>
+    </article>
+</IdLayout>

@@ -1,0 +1,42 @@
+{
+  "github": { "owner": "littlesealstudio", "repo": "homepage" },
+  "domain": "https://littleseal.kr",
+  "bNavigation": true,
+  "homeLabel": "home",
+  "navigationItems": ["projects", "blog", "service"],
+  "bPageFind": true,
+  "bThemeToggle": true,
+  "bRssFeed": true,
+  "bIntroduction": true,
+  "introduction": {
+    "badges": ["웹 & 앱 개발"],
+    "heading": "Little Seal Studio",
+    "subHeadingItems": [
+      {
+        "type": "mail",
+        "label": "littlesealstudio@gmail.com",
+        "url": "mailto:littlesealstudio@gmail.com"
+      },
+      {
+        "type": "address",
+        "label": "세종시, 대한민국",
+        "url": "https://www.google.com/maps/place/Seoul"
+      }
+    ],
+    "socialItems": [
+      { "type": "github", "url": "https://github.com/littlesealstudioadmin" },
+      { "type": "youtube", "url": "https://www.youtube.com/@littlesealstudio?si=4WAJ87XssYLyZs74" },
+      { "type": "gmail", "url": "mailto:littlesealstudio@gmail.com" },
+      { "type": "kakaotalk", "url": "https://open.kakao.com/o/suILIOxi" }
+    ],
+    "description": "리틀실스튜디오는 공기업 전산직 10년 차 웹 개발자의 대규모 시스템 설계 경험과 다수의 ERP 구축 내공을 바탕으로 운영되는 개발 스튜디오입니다. 공공 부문에서 검증된 견고한 시스템 안정성과 탄탄한 신뢰성을 자랑합니다. 우리는 단순 개발 납품을 넘어, 고객 서비스의 성공을 함께 고민하는 비즈니스 파트너 마인드로 단단하고 디테일한 기술 솔루션을 제안합니다.",
+    "ctaItems": [
+      { "label": "외주 문의하기", "url": "/service", "variant": "default" }
+    ]
+  },
+  "featured": {
+    "projects": { "visible": true },
+    "blog": { "visible": true },
+    "important": "projects"
+  }
+}

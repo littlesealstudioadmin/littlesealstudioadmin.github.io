@@ -1,0 +1,230 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+/* font */
+@import "https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css";
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700&display=swap');
+@import "@fontsource-variable/jetbrains-mono";
+@import "@fontsource-variable/geist-mono";
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+    --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+    --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+    --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* ! BASE STYLES */
+@layer base {
+    /* defaults */
+    * {
+        @apply border-border outline-ring/50;
+    }
+    body {
+        @apply bg-background overflow-y-scroll scroll-smooth font-sans antialiased text-foreground;
+    }
+    main {
+        @apply selection:bg-secondary-foreground selection:text-secondary relative z-10 min-h-screen bg-background;
+    }
+    hr {
+        @apply border-ring m-13 my-18 opacity-60;
+    }
+
+    /* utility */
+    .animation {
+        @apply transition-all duration-150 ease-in-out;
+    }
+}
+
+/* ! SHADCN */
+@theme inline {
+    /* font */
+    --font-heading: var(--font-sans);
+    --font-mono: "Geist Mono Variable", monospace;
+    --font-sans: "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+    --font-serif: "Noto Serif KR", Georgia, serif;
+
+    /* color */
+    --color-sidebar-ring: var(--sidebar-ring);
+    --color-sidebar-border: var(--sidebar-border);
+    --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+    --color-sidebar-accent: var(--sidebar-accent);
+    --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+    --color-sidebar-primary: var(--sidebar-primary);
+    --color-sidebar-foreground: var(--sidebar-foreground);
+    --color-sidebar: var(--sidebar);
+    --color-chart-5: var(--chart-5);
+    --color-chart-4: var(--chart-4);
+    --color-chart-3: var(--chart-3);
+    --color-chart-2: var(--chart-2);
+    --color-chart-1: var(--chart-1);
+    --color-ring: var(--ring);
+    --color-input: var(--input);
+    --color-border: var(--border);
+    --color-destructive: var(--destructive);
+    --color-accent-foreground: var(--accent-foreground);
+    --color-accent: var(--accent);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-muted: var(--muted);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-secondary: var(--secondary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-primary: var(--primary);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-popover: var(--popover);
+    --color-card-foreground: var(--card-foreground);
+    --color-card: var(--card);
+    --color-foreground: var(--foreground);
+    --color-background: var(--background);
+
+    /* radius */
+    --radius-sm: calc(var(--radius) * 0.6);
+    --radius-md: calc(var(--radius) * 0.8);
+    --radius-lg: var(--radius);
+    --radius-xl: calc(var(--radius) * 1.4);
+    --radius-2xl: calc(var(--radius) * 1.8);
+    --radius-3xl: calc(var(--radius) * 2.2);
+    --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+:root {
+    --background: #ffffff;
+    --foreground: #333333;
+    --foregrounds: #000000;
+    --card: #ffffff;
+    --card-foreground: #333333;
+    --popover: #ffffff;
+    --popover-foreground: #333333;
+    --primary: #000000;
+    --primary-foreground: #ffffff;
+    --secondary: #f4f4f5;
+    --secondary-foreground: #000000;
+    --muted: #f4f4f5;
+    --muted-foreground: #71717a;
+    --accent: #000000;
+    --accent-foreground: #ffffff;
+    --destructive: #ef4444;
+    --border: #333333;
+    --input: #333333;
+    --ring: #000000;
+    --chart-1: #333333;
+    --chart-2: #666666;
+    --chart-3: #999999;
+    --chart-4: #cccccc;
+    --chart-5: #eeeeee;
+    --radius: 0px;
+    --sidebar: #ffffff;
+    --sidebar-foreground: #333333;
+    --sidebar-primary: #000000;
+    --sidebar-primary-foreground: #ffffff;
+    --sidebar-accent: #f4f4f5;
+    --sidebar-accent-foreground: #000000;
+    --sidebar-border: #333333;
+    --sidebar-ring: #000000;
+}
+
+.dark {
+    --background: #000000;
+    --foreground: #cccccc;
+    --foregrounds: #ffffff;
+    --card: #121212;
+    --card-foreground: #cccccc;
+    --popover: #121212;
+    --popover-foreground: #cccccc;
+    --primary: #ffffff;
+    --primary-foreground: #000000;
+    --secondary: #1f1f1f;
+    --secondary-foreground: #ffffff;
+    --muted: #1f1f1f;
+    --muted-foreground: #888888;
+    --accent: #ffffff;
+    --accent-foreground: #000000;
+    --destructive: #f87171;
+    --border: #cccccc;
+    --input: #cccccc;
+    --ring: #ffffff;
+    --chart-1: #cccccc;
+    --chart-2: #999999;
+    --chart-3: #666666;
+    --chart-4: #444444;
+    --chart-5: #222222;
+    --sidebar: #121212;
+    --sidebar-foreground: #cccccc;
+    --sidebar-primary: #ffffff;
+    --sidebar-primary-foreground: #000000;
+    --sidebar-accent: #1f1f1f;
+    --sidebar-accent-foreground: #ffffff;
+    --sidebar-border: #cccccc;
+    --sidebar-ring: #ffffff;
+}
+
+/* * SHIKI CODE BLOCKS - DARK MODE */
+.dark .astro-code,
+.dark .astro-code span {
+    color: var(--shiki-dark) !important;
+    background-color: var(--shiki-dark-bg) !important;
+}
+
+/* * PAGEFIND SEARCH */
+:root {
+    --pf-text: var(--foreground);
+    --pf-text-secondary: var(--muted-foreground);
+    --pf-text-muted: var(--muted-foreground);
+    --pf-background: var(--background);
+    --pf-border: var(--border);
+    --pf-border-focus: var(--ring);
+    --pf-skeleton: var(--muted);
+    --pf-skeleton-shine: var(--accent);
+    --pf-hover: var(--muted);
+    --pf-mark: var(--foreground);
+    --pf-scroll-shadow: rgba(0, 0, 0, 0.08);
+    --pf-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+    --pf-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+    --pf-shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.2);
+    --pf-outline-focus: var(--ring);
+    --pf-font: "Geist Variable", sans-serif;
+    --pf-input-height: 40px;
+    --pf-input-font-size: 16px;
+    --pf-border-radius: 0.375rem;
+    --pf-modal-backdrop: rgba(0, 0, 0, 0.5);
+    --pf-modal-max-width: 560px;
+}
+
+.dark {
+    --pf-text: var(--foreground);
+    --pf-text-secondary: var(--muted-foreground);
+    --pf-text-muted: var(--muted-foreground);
+    --pf-background: var(--background);
+    --pf-border: var(--border);
+    --pf-border-focus: var(--ring);
+    --pf-skeleton: var(--muted);
+    --pf-skeleton-shine: var(--accent);
+    --pf-hover: var(--muted);
+    --pf-mark: var(--foreground);
+    --pf-scroll-shadow: rgba(255, 255, 255, 0.08);
+    --pf-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+    --pf-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+    --pf-shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.5);
+    --pf-outline-focus: var(--ring);
+    --pf-modal-backdrop: rgba(0, 0, 0, 0.7);
+}
+
+/* * SCROLLBAR STYLING */
+@layer base {
+    ::-webkit-scrollbar {
+        width: 0px;
+    }
+    ::-webkit-scrollbar-track {
+        background-color: transparent;
+    }
+}

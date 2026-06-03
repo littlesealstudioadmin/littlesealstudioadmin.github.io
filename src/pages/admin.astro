@@ -1,0 +1,28 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import CmsDashboard from "@/components/client/CmsDashboard";
+
+const isDev = import.meta.env.DEV;
+---
+
+{isDev ? (
+    <BaseLayout 
+        title="리틀실스튜디오 / 콘텐츠 작성 시스템" 
+        description="정적 사이트 블로그와 프로젝트 아카이브를 편리하게 작성하고 저장할 수 있는 간이 CMS 도구입니다."
+        image="/og/default.png"
+    >
+        <div class="py-10" transition:animate="fade">
+            <CmsDashboard client:load />
+        </div>
+    </BaseLayout>
+) : (
+    <BaseLayout title="404 - 존재하지 않는 페이지" description="요청하신 페이지를 찾을 수 없습니다.">
+        <div class="py-32 text-center" transition:animate="fade">
+            <h1 class="text-4xl font-serif font-bold text-foreground mb-4">404</h1>
+            <p class="text-sm font-mono text-muted-foreground">요청하신 페이지를 찾을 수 없거나 접근할 수 없습니다.</p>
+            <a href="/" class="inline-block mt-8 border border-foreground px-6 py-2 hover:bg-foreground hover:text-background text-sm font-medium transition-all duration-200">
+                홈으로 돌아가기
+            </a>
+        </div>
+    </BaseLayout>
+)}

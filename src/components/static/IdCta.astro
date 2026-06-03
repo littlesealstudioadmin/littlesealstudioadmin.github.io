@@ -1,0 +1,26 @@
+---
+import { buttonVariants } from "../ui/button";
+import { SocialIcon } from "@/lib/icons";
+
+const { type } = Astro.props;
+---
+
+{
+    type === "blog" ? (
+        <div class="flex flex-col items-center justify-center gap-3 border border-border p-6 w-fit mx-auto mb-6">
+            <p class="text-secondary-foreground/80">재밌게 읽으셨나요?</p>
+            <a href="https://medium.com" target="_blank" rel="noopener noreferrer" class={`flex items-center justify-center gap-2 ${buttonVariants({ variant: "default" })}`}>
+                <SocialIcon type="medium" className="size-6" />
+                <span>Medium에서 구독하기</span>
+            </a>
+        </div>
+    ) : (
+        <div class="flex flex-col items-center justify-center gap-3 border border-border p-6 w-fit mx-auto mb-6">
+            <p class="text-secondary-foreground/80">프로젝트가 마음에 드시나요?</p>
+            <a href="https://github.com/createogu" target="_blank" rel="noopener noreferrer" class={`flex items-center justify-center gap-2 ${buttonVariants({ variant: "default" })}`}>
+                <SocialIcon type="github" className="size-6" />
+                <span>GitHub 팔로우하기</span>
+            </a>
+        </div>
+    )
+}

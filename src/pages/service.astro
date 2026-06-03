@@ -1,0 +1,544 @@
+---
+import IndexLayout from "@/layouts/IndexLayout.astro";
+import IndexHeader from "@/components/static/IndexHeader.astro";
+import { RiMailLine, RiKakaoTalkFill, RiGitMergeLine, RiUserHeartLine, RiShieldUserLine, RiCommandLine } from "@remixicon/react";
+import site_config from "@/site-config.json";
+
+const emailItem = site_config.introduction.subHeadingItems.find(item => item.type === "mail");
+const emailUrl = emailItem?.url ?? "mailto:littlesealstudio@gmail.com";
+
+const kakaoItem = site_config.introduction.socialItems.find(item => item.type === "kakaotalk");
+const kakaoUrl = kakaoItem?.url ?? "https://open.kakao.com";
+
+const pricingData = [
+  {
+    title: "심플 랜딩 페이지 / 브랜드 홈페이지",
+    price: "30만 원 ~",
+    duration: "1~2주",
+    scope: "로딩 속도가 1초 미만인 고성능 홈페이지 및 랜딩 페이지 제작",
+    iconName: "UserHeart",
+    features: [
+      "단일 페이지 (1개 스크롤 화면) 기준",
+      "4~5개 논리적 섹션 구성",
+      "전화/이메일/카카오톡 채널 연동",
+      "반응형 모바일 최적화 및 검색 등록",
+      "Astro, React 기반 고성능 페이지 구축"
+    ]
+  },
+  {
+    title: "업무 자동화 도구 (매크로 / 크롤러)",
+    price: "50만 원 ~",
+    duration: "1~2주",
+    scope: "반복적인 단순 컴퓨터 업무를 클릭 한 번으로 가공하는 프로그램",
+    iconName: "CommandLine",
+    features: [
+      "동일한 양식의 엑셀 파일 1종 자동 변환",
+      "공개 웹사이트 1곳 정보 자동 수집 (크롤러)",
+      "단일 플랫폼 API 데이터 연계 1개",
+      "비개발자 실행용 간편 실행기 제공",
+      "로그인이나 차단 우회 없는 사이트 기준"
+    ]
+  },
+  {
+    title: "소규모 관리 도구 / 미니 ERP",
+    price: "100만 원 ~",
+    duration: "2~3주",
+    scope: "매장 및 소호 관리에 최적화된 소형 어드민 대시보드",
+    iconName: "ShieldUser",
+    features: [
+      "최대 3개 화면 (대시보드 + 목록 + 등록)",
+      "최대 3종의 핵심 데이터 관리 구조",
+      "비밀번호 로그인 보안 게이트 제공",
+      "목록 데이터 엑셀/문서 다운로드",
+      "구글 스프레드시트 또는 초경량 데이터베이스 연동"
+    ]
+  },
+  {
+    title: "Flutter 멀티플랫폼 웹·앱 MVP",
+    price: "150만 원 ~",
+    duration: "3~4주",
+    scope: "단일 코드로 iOS와 Android 환경에서 구동되는 고성능 시제품",
+    iconName: "GitMerge",
+    features: [
+      "최대 5개 핵심 앱 화면 구성",
+      "안드로이드, iOS 앱 및 모바일웹 동시 빌드",
+      "간이 이메일 회원가입 및 로그인",
+      "정보 리스트 조회 및 상세 페이지 이동",
+      "1:1 건의사항 작성 및 관리자 전달"
+    ]
+  }
+];
+
+const specData = {
+  website: {
+    title: "심플 랜딩 페이지 / 브랜드 홈페이지",
+    tiers: [
+      { name: "기본형", price: "30만 원" },
+      { name: "플러스형", price: "70만 원" },
+      { name: "고급형", price: "150만 원" }
+    ],
+    features: [
+      { name: "화면 및 페이지 수", values: ["단일 스크롤 (1페이지)", "다중 페이지 (최대 5페이지)", "제한 없음 (무제한 페이지)"] },
+      { name: "반응형 모바일 최적화", values: ["✓", "✓", "✓"] },
+      { name: "문의 접수 / 입력 폼", values: ["연락 링크만 제공", "✓ (구글 스프레드시트 연동)", "✓ (맞춤형 고급 입력 폼)"] },
+      { name: "검색 노출 최적화", values: ["네이버/구글 기본 등록", "네이버/구글 기본 등록", "사이트맵 자동 생성 및 고급 노출 설정"] },
+      { name: "다국어 지원", values: ["-", "✓ (2개 국어 제공)", "✓ (다중 언어 확장 가능)"] },
+      { name: "어드민 / CMS 관리자", values: ["-", "-", "✓ (콘텐츠 관리 시스템 제공)"] },
+      { name: "소스 코드 & 설명서 인계", values: ["✓ (깃허브 인계)", "✓ (깃허브 인계)", "✓ (깃허브 인계)"] },
+      { name: "무상 하자보수 기간", values: ["1개월", "2개월", "3개월"] }
+    ]
+  },
+  automation: {
+    title: "업무 자동화 도구 (매크로 / 크롤러)",
+    tiers: [
+      { name: "기본형", price: "50만 원" },
+      { name: "플러스형", price: "120만 원" },
+      { name: "고급형", price: "250만 원" }
+    ],
+    features: [
+      { name: "대상 작업 범위", values: ["단일 파일 / 단순 데이터 가공", "최대 3개 서비스 연계 가공", "복잡한 데이터 흐름 / 다중 연동"] },
+      { name: "웹 데이터 수집 (크롤러)", values: ["공개 사이트 1곳 (비로그인 기준)", "로그인 필요한 사이트 (세션 유지)", "대용량 분산 수집 및 아이피 우회"] },
+      { name: "외부 알림 연동", values: ["-", "✓ (카카오 알림톡/텔레그램)", "✓ (실시간 채널 알림 커스텀)"] },
+      { name: "구동 환경", values: ["로컬 단일 실행기 (원클릭 파일)", "로컬 간이 대시보드 프로그램", "클라우드 서버 24시간 자동 구동"] },
+      { name: "연동 외부 채널 수", values: ["1개 기본 연계", "최대 3개 연계", "제한 없음 (무제한 연동)"] },
+      { name: "소스 코드 & 설명서 인계", values: ["✓", "✓", "✓"] },
+      { name: "무상 하자보수 기간", values: ["1개월", "2개월", "3개월"] }
+    ]
+  },
+  erp: {
+    title: "소규모 관리 도구 / 미니 ERP",
+    tiers: [
+      { name: "기본형", price: "100만 원" },
+      { name: "플러스형", price: "250만 원" },
+      { name: "고급형", price: "500만 원" }
+    ],
+    features: [
+      { name: "제공 화면 및 메뉴 수", values: ["최대 3개 화면", "최대 8개 화면", "제한 없음 (기능 스펙 맞춤 제작)"] },
+      { name: "데이터 관리 구조", values: ["기본 데이터 관리 (추가/수정/삭제)", "다차원 관계형 매핑 데이터", "대용량 트랜잭션 및 자동 백업 설계"] },
+      { name: "사용자 로그인 및 권한", values: ["단일 관리자 계정 제공", "다중 계정 및 권한 분리 (관리자/직원)", "역할별 상세 권한 분기 및 접근 로그"] },
+      { name: "데이터베이스 (DB)", values: ["구글시트 또는 초경량 DB", "상용 클라우드 데이터베이스", "독립형 전용 데이터베이스 최적화"] },
+      { name: "통계 및 리포트", values: ["단순 엑셀 다운로드", "기본 차트 및 시각화 그래프", "실시간 매출/재고 통계 분석 대시보드"] },
+      { name: "결제 모듈 연동", values: ["-", "✓ (옵션 연동)", "✓ (카드 결제 및 정산 기능 연동)"] },
+      { name: "소스 코드 & 설명서 인계", values: ["✓ (깃허브 인계)", "✓ (깃허브 인계)", "✓ (깃허브 인계)"] },
+      { name: "무상 하자보수 기간", values: ["1개월", "2개월", "3개월"] }
+    ]
+  },
+  flutter: {
+    title: "Flutter 멀티플랫폼 웹·앱 MVP",
+    tiers: [
+      { name: "기본형", price: "150만 원" },
+      { name: "플러스형", price: "350만 원" },
+      { name: "고급형", price: "700만 원" }
+    ],
+    features: [
+      { name: "핵심 앱 화면 수", values: ["최대 5개 화면", "최대 12개 화면", "제한 없음 (원하는 기능 무제한 구현)"] },
+      { name: "동시 빌드 배포 플랫폼", values: ["안드로이드 앱 + iOS 앱 + 모바일웹", "안드로이드 앱 + iOS 앱 + 모바일웹", "안드로이드 앱 + iOS 앱 + 웹 + 데스크톱"] },
+      { name: "회원가입 및 인증", values: ["이메일 가입/로그인 기본", "간편 SNS 로그인 (구글/카카오/애플)", "간편 SNS 로그인 + 전화번호 본인 인증"] },
+      { name: "실시간 푸시 알림", values: ["-", "✓ (기본 푸시 알림 서버)", "✓ (정교한 타겟팅/개별 알림 발송)"] },
+      { name: "위치 정보 및 지도 연동", values: ["-", "✓ (기본 위치 검색 및 지도 뷰)", "✓ (실시간 위치 추적 및 커스텀 마커)"] },
+      { name: "카드 결제 모듈 연동", values: ["-", "-", "✓ (신용카드 결제 및 정산 대행사 연동)"] },
+      { name: "스토어 정식 심사 및 대행", values: ["가이드 문서 제공 (본인 제출)", "가이드 문서 제공 (본인 제출)", "✓ (앱 스토어 및 구글 플레이 등록 대행)"] },
+      { name: "소스 코드 & 설명서 인계", values: ["✓ (깃허브 인계)", "✓ (깃허브 인계)", "✓ (깃허브 인계)"] },
+      { name: "무상 하자보수 기간", values: ["1개월", "2개월", "3개월"] }
+    ]
+  }
+};
+---
+
+<IndexLayout title="외주 및 협업 안내 - Little Seal Studio" description="플러터(Flutter) 멀티플랫폼 앱 개발과 Astro/Next.js 고성능 웹 애플리케이션을 합리적인 예산으로 정교하게 구축합니다." image="/og/default.png">
+    <div transition:animate="fade" class="space-y-8 select-none font-sans">
+        <IndexHeader url="/" heading="Service" />
+
+        <!-- 1. Intro Banner -->
+        <section class="border border-border p-8 bg-card relative overflow-hidden">
+            <div class="max-w-2xl space-y-4">
+                <h2 class="text-3xl font-semibold leading-tight text-foreground/90">
+                    아이디어를 현실로 만드는 가장 빠른 길,<br />
+                    엔지니어링 최적화로 거품을 완전히 뺀 쾌속 개발
+                </h2>
+                <p class="text-base text-muted-foreground leading-relaxed mt-2">
+                    리틀실스튜디오는 <strong>공기업 전산직 10년 차 대표 개발자</strong>의 설계 노하우를 바탕으로, 스타트업과 개인 창업자 분들의 비즈니스가 가볍고 빠르게 시장에 안착할 수 있도록 기술을 지원합니다. 
+                    중간 영업 인력, 기획 관리 마진, 화려한 사무실 임대료 등의 불필요한 에이전시 고정비를 완전히 제거하고 **대표 개발자가 1:1로 직접 설계하고 코딩**합니다. 
+                    고도로 축적된 규격 템플릿과 최적화된 엔지니어링 공정을 통해, 퀄리티는 타협하지 않으면서도 업계 평균 대비 **압도적으로 합리적인 최저 시작 단가**를 투명하게 제시해 드립니다.
+                </p>
+            </div>
+        </section>
+
+        <!-- 2. Budget Guide (Pricing Cards & Carousel) -->
+        <section class="border border-border p-6 md:p-8 bg-background">
+            <h3 class="text-xl font-bold border-b-2 border-foreground pb-3 mb-6">합리적인 비용 안내</h3>
+            <p class="text-sm text-muted-foreground mb-6 leading-relaxed">
+                비즈니스의 빠른 시작과 검증을 위해 거품 낀 중간 기획 마진을 없애고, 대표 개발자가 직접 1:1 프로세스로 제작하는 합리적인 최저 시작 단가 테이블입니다.
+            </p>
+            
+            <div class="space-y-4">
+                <!-- Carousel View Guide (Visible on all screens) -->
+                <div class="flex items-center justify-between text-xs text-muted-foreground px-1">
+                    <span>좌우로 스크롤하여 확인</span>
+                    <span class="font-mono">1 / 4</span>
+                </div>
+                
+                <!-- Cards Container (Horizontal Scroll Carousel on all screens) -->
+                <div class="flex overflow-x-auto snap-x snap-mandatory gap-6 pb-6 -mx-6 px-6 scrollbar-none" id="pricing-carousel">
+                    {pricingData.map((item, idx) => {
+                        let IconComponent = RiUserHeartLine;
+                        if (item.iconName === "CommandLine") IconComponent = RiCommandLine;
+                        if (item.iconName === "ShieldUser") IconComponent = RiShieldUserLine;
+                        if (item.iconName === "GitMerge") IconComponent = RiGitMergeLine;
+
+                        return (
+                            <div class="snap-center shrink-0 w-[80vw] sm:w-[340px] md:w-[380px] lg:w-[400px] border-2 border-border p-6 bg-card hover:bg-muted/5 transition-all duration-300 flex flex-col justify-between relative cursor-pointer" data-index={idx} data-id={item.id}>
+                                <div class="space-y-4">
+                                    <div class="flex justify-between items-start">
+                                        <!-- Icon Box -->
+                                        <div class="size-10 flex items-center justify-center border border-foreground bg-muted">
+                                            <IconComponent className="size-5 text-foreground" />
+                                        </div>
+                                        <span class="text-xs uppercase font-mono tracking-wider text-muted-foreground font-bold border border-border px-2 py-0.5 bg-muted">{item.duration}</span>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-base font-bold text-foreground leading-tight min-h-[44px] flex items-center">{item.title}</h4>
+                                        <p class="text-xs text-muted-foreground leading-relaxed mt-2 min-h-[34px]">{item.scope}</p>
+                                    </div>
+                                    <div class="border-t border-border/60 my-2"></div>
+                                    
+                                    <!-- SaaS-style Features Checklist -->
+                                    <ul class="space-y-2.5 text-xs text-foreground/80 font-sans min-h-[130px]">
+                                        {item.features.map(feature => (
+                                            <li class="flex items-start gap-1.5 leading-relaxed">
+                                                <span class="text-foreground font-bold text-xs select-none">✓</span>
+                                                <span>{feature}</span>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                                <div class="mt-6 pt-4 border-t border-border/40">
+                                    <p class="text-xs text-muted-foreground uppercase font-mono font-bold">최소 시작 금액</p>
+                                    <p class="text-2xl font-black text-foreground font-mono mt-0.5">{item.price}</p>
+                                </div>
+                            </div>
+                        );
+                    })}
+                </div>
+                
+                <!-- Simple Indicator Dot System (Visible on all screens) -->
+                <div class="flex justify-center gap-1.5 pt-2">
+                    {pricingData.map((_, idx) => (
+                        <div class={`size-2 border border-foreground transition-all duration-200 ${idx === 0 ? 'bg-foreground' : 'bg-transparent'}`} data-indicator={idx}></div>
+                    ))}
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Spec Comparison Section (Dynamic Table) -->
+        <section class="border border-border p-6 md:p-8 bg-background">
+            <h3 class="text-xl font-bold border-b-2 border-foreground pb-3 mb-2" id="spec-table-title">{specData.website.title} - 세부 스펙 비교</h3>
+            <p class="text-sm text-muted-foreground mb-6 leading-relaxed">
+                상단의 서비스 종류 카드를 클릭하시면 해당 서비스의 등급별 기술 스펙과 상세 단가 비교를 확인하실 수 있습니다.
+            </p>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse border border-border">
+                    <thead id="spec-table-header">
+                        <tr class="bg-muted font-mono text-xs uppercase text-foreground border-b border-border">
+                            <th class="p-3 border-r border-border min-w-[180px] md:min-w-[220px] whitespace-nowrap">제공 기능 및 스펙</th>
+                            {specData.website.tiers.map(tier => (
+                                <th class="p-3 border-r border-border text-center whitespace-nowrap">
+                                    <div class="font-bold text-sm text-foreground">{tier.name}</div>
+                                    <div class="font-mono text-xs text-muted-foreground mt-0.5">{tier.price}</div>
+                                </th>
+                            ))}
+                        </tr>
+                    </thead>
+                    <tbody class="text-sm divide-y divide-border font-mono" id="spec-table-body">
+                        {specData.website.features.map(feature => (
+                            <tr class="hover:bg-muted/5 transition-colors">
+                                <td class="p-3 border-r border-border font-sans font-bold whitespace-nowrap">{feature.name}</td>
+                                {feature.values.map((val) => (
+                                    <td class={`p-3 border-r last:border-r-0 border-border text-center whitespace-nowrap ${val === '✓' || val.startsWith('✓') ? 'text-foreground font-bold' : val === '-' ? 'text-muted-foreground/30' : 'text-foreground/90'}`}>
+                                        {val}
+                                    </td>
+                                ))}
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- 3. Collaboration Process -->
+        <section class="border border-border p-8 bg-background">
+            <h3 class="text-xl font-bold border-b-2 border-foreground pb-3 mb-6">진행 프로세스</h3>
+            <div class="space-y-6">
+                <div class="flex items-start gap-4">
+                    <div class="font-mono text-lg font-bold text-muted-foreground border border-border px-2 py-0.5 bg-muted">01</div>
+                    <div>
+                        <h4 class="text-base font-bold text-foreground">직관적이고 유연한 소통</h4>
+                        <p class="text-sm text-muted-foreground mt-1">기획서나 전문 개발 사양 양식이 없어도 괜찮습니다. 이메일이나 카카오톡 오픈채팅으로 구상 중이신 아이디어와 참고용 화면만 편하게 전달해 주시면 1:1로 직접 스펙을 다듬어 드립니다.</p>
+                    </div>
+                </div>
+
+                <div class="flex items-start gap-4">
+                    <div class="font-mono text-lg font-bold text-muted-foreground border border-border px-2 py-0.5 bg-muted">02</div>
+                    <div>
+                        <h4 class="text-base font-bold text-foreground">기능 압축 및 군더더기 없는 단가 설계</h4>
+                        <p class="text-sm text-muted-foreground mt-1">개발 단가를 무의미하게 올리는 불필요한 기술 복잡성을 철저히 걷어냅니다. 가장 기민하고 효율적인 구조로 빠르게 론칭해 볼 수 있는 콤팩트한 예산과 작업 일정을 설계합니다.</p>
+                    </div>
+                </div>
+
+                <div class="flex items-start gap-4">
+                    <div class="font-mono text-lg font-bold text-muted-foreground border border-border px-2 py-0.5 bg-muted">03</div>
+                    <div>
+                        <h4 class="text-base font-bold text-foreground">실시간 데모 공유 및 피드백 수렴</h4>
+                        <p class="text-sm text-muted-foreground mt-1">매주 실제 화면상에서 돌아가는 데모 링크를 전달해 드립니다. 직접 폰으로 만져보며 눈으로 구동 과정을 추적하고, 피드백을 신속하고 투명하게 화면에 즉시 반영합니다.</p>
+                    </div>
+                </div>
+
+                <div class="flex items-start gap-4">
+                    <div class="font-mono text-lg font-bold text-muted-foreground border border-border px-2 py-0.5 bg-muted">04</div>
+                    <div>
+                        <h4 class="text-base font-bold text-foreground">깔끔한 소스 인계 및 가이드 제공</h4>
+                        <p class="text-sm text-muted-foreground mt-1">배포 이후 다른 개발자가 보아도 즉시 파악하고 유지보수할 수 있는 깔끔한 표준 코드로 작성하여 넘겨드립니다. 누구나 손쉽게 시스템을 구동해 볼 수 있는 미니 설명 문서를 정성껏 제공합니다.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3.5 FAQ Section -->
+        <section class="border border-border p-8 bg-background font-sans">
+            <h3 class="text-xl font-bold border-b-2 border-foreground pb-3 mb-6">자주 묻는 질문</h3>
+            <div class="space-y-4 divide-y divide-border/60">
+                
+                <!-- Q1 -->
+                <details class="group pt-4 first:pt-0">
+                    <summary class="list-none flex items-center justify-between cursor-pointer font-bold text-foreground hover:text-foreground/80 outline-none select-none">
+                        <div class="flex items-start gap-2">
+                            <span class="font-mono text-muted-foreground">Q.</span>
+                            <span>기획서나 구체적인 사양서가 없는 상태에서도 개발 상담이 가능한가요?</span>
+                        </div>
+                        <span class="font-mono text-xs text-muted-foreground transition-transform duration-200 group-open:rotate-180">▼</span>
+                    </summary>
+                    <p class="text-sm text-muted-foreground pl-6 mt-3 pb-6 leading-relaxed">
+                        네, 당연히 가능합니다! 만들고 싶으신 비즈니스 구상안이나 현재 사람이 수작업으로 처리 중인 간단한 파일 서식, 대략적인 화면 손그림만 보여주셔도 이를 기반으로 핵심 화면 기획과 꼭 필요한 기능 단위를 깔끔하게 정의해 드립니다.
+                    </p>
+                </details>
+
+                <!-- Q2 -->
+                <details class="group pt-4">
+                    <summary class="list-none flex items-center justify-between cursor-pointer font-bold text-foreground hover:text-foreground/80 outline-none select-none">
+                        <div class="flex items-start gap-2">
+                            <span class="font-mono text-muted-foreground">Q.</span>
+                            <span>주로 사용하는 기술 스택은 무엇인가요? MVP라고 소스 코드가 지저분하진 않을까요?</span>
+                        </div>
+                        <span class="font-mono text-xs text-muted-foreground transition-transform duration-200 group-open:rotate-180">▼</span>
+                    </summary>
+                    <p class="text-sm text-muted-foreground pl-6 mt-3 pb-6 leading-relaxed">
+                        모바일 앱은 단일 코드로 iOS와 Android를 동시 제작할 수 있는 **플러터(Flutter)** 엔진을 주로 사용합니다. 웹 화면 구축에는 **Astro, Next.js, React, Tailwind CSS** 등 최신 고성능 웹 프레임워크를 다루며, 10년 차 경력에 어울리게 데이터가 꼬이지 않는 튼튼한 데이터베이스 및 백엔드(Spring Boot, MyBatis) 기술을 조합하여 보이지 않는 뼈대 속까지 깨끗하고 안전한 표준형 청정 코드를 완성합니다.
+                    </p>
+                </details>
+
+                <!-- Q3 -->
+                <details class="group pt-4">
+                    <summary class="list-none flex items-center justify-between cursor-pointer font-bold text-foreground hover:text-foreground/80 outline-none select-none">
+                        <div class="flex items-start gap-2">
+                            <span class="font-mono text-muted-foreground">Q.</span>
+                            <span>거대하고 무거운 B2B 시스템 말고, 개인이나 스타트업의 가벼운 웹/앱 위주로만 의뢰해도 되나요?</span>
+                        </div>
+                        <span class="font-mono text-xs text-muted-foreground transition-transform duration-200 group-open:rotate-180">▼</span>
+                    </summary>
+                    <p class="text-sm text-muted-foreground pl-6 mt-3 pb-6 leading-relaxed">
+                        <strong>네! 저희 스튜디오가 가장 선호하고 집중하여 빠르게 해결해 드리는 최적의 프로젝트 규모입니다.</strong> 저희는 거대하고 무거운 B2B 시스템 고도화보다 브랜드 홈페이지, 홍보용 랜딩 페이지, 업무 자동화 스크립트, 그리고 비즈니스 검증용 **소형 콤팩트 웹·앱 MVP 개발**을 가장 효율적으로 잘 다룹니다. 10년간의 탄탄한 전산 설계 내공은 단지 여러분이 의뢰하시는 경량 웹·앱이 '장애 없이 정석대로 튼튼하게 구동된다'는 확실한 기술적 품질 보증이 되어줍니다.
+                    </p>
+                </details>
+
+                <!-- Q4 -->
+                <details class="group pt-4">
+                    <summary class="list-none flex items-center justify-between cursor-pointer font-bold text-foreground hover:text-foreground/80 outline-none select-none">
+                        <div class="flex items-start gap-2">
+                            <span class="font-mono text-muted-foreground">Q.</span>
+                            <span>매일 수작업으로 돌리는 반복 업무를 자동화해 주는 도구도 제작이 가능한가요?</span>
+                        </div>
+                        <span class="font-mono text-xs text-muted-foreground transition-transform duration-200 group-open:rotate-180">▼</span>
+                    </summary>
+                    <p class="text-sm text-muted-foreground pl-6 mt-3 pb-6 leading-relaxed">
+                        네, 아주 환영하는 작업입니다! 매일 특정 웹 사이트에 접속해서 데이터를 긁어와 정리하는 웹 크롤링/스크래핑 작업, 엑셀 파일 수작업 정리를 클릭 한 번으로 가공하는 업무 자동화 프로그램, 다양한 외부 서비스 API 연동 개발 등 **지루하고 단순한 컴퓨터 반복 노동을 마우스 클릭 하나로 간편하게 자동 해결해 주는 실용적인 웹 도구**를 신속하게 제작해 드립니다.
+                    </p>
+                </details>
+
+                <!-- Q5 -->
+                <details class="group pt-4">
+                    <summary class="list-none flex items-center justify-between cursor-pointer font-bold text-foreground hover:text-foreground/80 outline-none select-none">
+                        <div class="flex items-start gap-2">
+                            <span class="font-mono text-muted-foreground">Q.</span>
+                            <span>예산 산정 기준과 다른 에이전시보다 월등하게 저렴한 예산이 가능한 이유가 궁금합니다.</span>
+                        </div>
+                        <span class="font-mono text-xs text-muted-foreground transition-transform duration-200 group-open:rotate-180">▼</span>
+                    </summary>
+                    <p class="text-sm text-muted-foreground pl-6 mt-3 pb-6 leading-relaxed">
+                        리틀실스튜디오는 대형 외주 에이전시처럼 비싼 사무실 임대 비용이나 영업 사원, 중간 관리 인력 수수료 등의 불필요한 회사 고정비 마진이 전혀 없습니다. 대표 개발자가 직접 1:1로 소통하며 설계와 개발을 원스톱으로 도맡고, 축적된 규격 템플릿 공정을 통해 제작 속도를 대폭 단축시켰기 때문에 타사 대비 50% 이상 저렴한 파격적인 최저 시작 단가(홈페이지 30만 원, Flutter 앱 150만 원 등)를 자신 있게 제시할 수 있습니다. 모든 계약은 공식적인 용역 계약서 및 하자보수 이행 확약서를 체결하여 법적 안전성을 보장하고 성실히 지원합니다.
+                    </p>
+                </details>
+
+            </div>
+        </section>
+
+        <!-- 4. Quick Contact Channels -->
+        <section class="border border-border p-8 bg-muted/30 text-center space-y-6">
+            <h3 class="text-xl font-bold">프로젝트 상담 및 협업 제안</h3>
+            <p class="text-sm text-muted-foreground max-w-lg mx-auto">
+                합리적인 최저 단가 예산으로 스타트업 MVP 출시, 브랜드 사이트 구축, 반복 업무를 단번에 해결하는 자동화 도구 개발을 도와드립니다. 고민 중이신 기획이나 불편사항을 메일이나 카카오톡 오픈채팅으로 가볍게 보내주세요!
+            </p>
+            <div class="flex flex-wrap items-center justify-center gap-4">
+                <a href={emailUrl} class="flex items-center gap-2 border border-foreground bg-foreground text-background px-6 py-2.5 hover:bg-background hover:text-foreground font-medium text-sm transition-all duration-200">
+                    <RiMailLine className="size-4" />
+                    <span>이메일 문의하기</span>
+                </a>
+                <a href={kakaoUrl} target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 border border-foreground bg-background text-foreground px-6 py-2.5 hover:bg-foreground hover:text-background font-medium text-sm transition-all duration-200">
+                    <RiKakaoTalkFill className="size-4" />
+                    <span>카카오톡 문의하기</span>
+                </a>
+            </div>
+        </section>
+    </div>
+</IndexLayout>
+
+<style>
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    #pricing-carousel::-webkit-scrollbar {
+        display: none;
+    }
+    /* Hide scrollbar for IE, Edge and Firefox */
+    #pricing-carousel {
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
+    }
+</style>
+
+<script define:vars={{ specData }}>
+    function initCarousel() {
+        const carousel = document.getElementById('pricing-carousel');
+        const cards = carousel?.querySelectorAll('[data-index]');
+        const indicators = document.querySelectorAll('[data-indicator]');
+        const countDisplay = carousel?.previousElementSibling?.querySelector('.font-mono');
+        
+        const specTableBody = document.getElementById('spec-table-body');
+        const specTableHeader = document.getElementById('spec-table-header');
+        const specTableTitle = document.getElementById('spec-table-title');
+
+        if (!carousel || !cards || cards.length === 0) return;
+
+        // Service ID Mapping
+        const serviceIds = ['website', 'automation', 'erp', 'flutter'];
+        let currentServiceId = 'website';
+
+        // Initialize Cards
+        cards.forEach((card, idx) => {
+            const serviceId = serviceIds[idx];
+            card.setAttribute('data-service-id', serviceId);
+            card.style.cursor = 'pointer';
+
+            // Click listener to toggle active card and render spec table
+            card.addEventListener('click', () => {
+                currentServiceId = serviceId;
+                updateCardVisuals();
+                renderSpecTable(currentServiceId);
+
+                // Smooth scroll into view
+                card.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            });
+        });
+
+        function updateCardVisuals() {
+            cards.forEach((c, i) => {
+                const sId = serviceIds[i];
+                
+                if (sId === currentServiceId) {
+                    c.classList.add('border-foreground', 'bg-foreground/[0.04]', 'opacity-100');
+                    c.classList.remove('opacity-40', 'grayscale-[40%]', 'border-border');
+                } else {
+                    c.classList.remove('border-foreground', 'bg-foreground/[0.04]', 'opacity-100');
+                    c.classList.add('opacity-40', 'grayscale-[40%]', 'border-border');
+                }
+            });
+        }
+
+        // Run initial visual state
+        updateCardVisuals();
+
+        // Swipe Carousel Indicator Observer
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const index = parseInt(entry.target.getAttribute('data-index') || '0', 10);
+                    
+                    indicators.forEach((ind, idx) => {
+                        if (idx === index) {
+                            ind.classList.add('bg-foreground');
+                            ind.classList.remove('bg-transparent');
+                        } else {
+                            ind.classList.remove('bg-foreground');
+                            ind.classList.add('bg-transparent');
+                        }
+                    });
+
+                    if (countDisplay) {
+                        countDisplay.textContent = `${index + 1} / 4`;
+                    }
+                }
+            });
+        }, {
+            root: carousel,
+            threshold: 0.6
+        });
+
+        cards.forEach(card => observer.observe(card));
+
+        // Render Table function
+        function renderSpecTable(serviceId) {
+            const data = specData[serviceId];
+            if (!data) return;
+
+            // Title
+            if (specTableTitle) {
+                specTableTitle.textContent = `${data.title} - 세부 스펙 비교`;
+            }
+
+            // Header (Tiers)
+            if (specTableHeader) {
+                specTableHeader.innerHTML = `
+                    <tr class="bg-muted font-mono text-xs uppercase text-foreground border-b border-border">
+                        <th class="p-3 border-r border-border min-w-[180px] md:min-w-[220px] whitespace-nowrap">제공 기능 및 스펙</th>
+                        ${data.tiers.map((tier, idx) => `
+                            <th class="p-3 border-r last:border-r-0 border-border text-center whitespace-nowrap">
+                                <div class="font-bold text-sm text-foreground">${tier.name}</div>
+                                <div class="font-mono text-xs text-muted-foreground mt-0.5">${tier.price}</div>
+                            </th>
+                        `).join('')}
+                    </tr>
+                `;
+            }
+
+            // Body (Features)
+            if (specTableBody) {
+                specTableBody.innerHTML = data.features.map(feature => `
+                    <tr class="hover:bg-muted/5 transition-colors">
+                        <td class="p-3 border-r border-border font-sans font-bold whitespace-nowrap">${feature.name}</td>
+                        ${feature.values.map(val => {
+                            const isCheck = val === '✓' || val.startsWith('✓');
+                            const isDash = val === '-';
+                            const textClass = isCheck ? 'text-foreground font-bold' : isDash ? 'text-muted-foreground/30' : 'text-foreground/90';
+                            return `<td class="p-3 border-r last:border-r-0 border-border text-center whitespace-nowrap ${textClass}">${val}</td>`;
+                        }).join('')}
+                    </tr>
+                `).join('');
+            }
+        }
+
+        // Run render initially
+        renderSpecTable(currentServiceId);
+    }
+
+    // Astro transition support
+    document.addEventListener('astro:page-load', initCarousel);
+    // Initial run
+    initCarousel();
+</script>

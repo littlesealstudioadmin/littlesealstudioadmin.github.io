@@ -1,0 +1,55 @@
+---
+import FilterProjects from "@/components/client/FilterProjects";
+import projectsConfig from "@/projects-config.json";
+import { parse } from "date-fns";
+import { getImage } from "astro:assets";
+import type { projectConfig } from "@/lib/types";
+import type { ImageMetadata } from "astro";
+import IndexHeader from "@/components/static/IndexHeader.astro";
+import IndexLayout from "@/layouts/IndexLayout.astro";
+
+const allItems = projectsConfig
+    .filter((item) => item.id !== "project-id-template")
+    .sort((a, b) => {
+        const dateA = parse(a.data.date, "dd-MM-yyyy", new Date());
+        const dateB = parse(b.data.date, "dd-MM-yyyy", new Date());
+        return dateB.getTime() - dateA.getTime();
+    });
+
+type ImageRecord = { default: ImageMetadata };
+const imageModules = import.meta.glob<ImageRecord>("@/assets/projects/*/*.{png,jpg,jpeg,webp,gif,avif}", { eager: true });
+
+const enriched = await Promise.all(
+    allItems.map(async (item) => {
+        const matches = Object.entries(imageModules)
+            .filter(([path]) => path.includes(`/assets/projects/${item.id}/`))
+            .sort(([a], [b]) => a.localeCompare(b))
+            .map(([, mod]) => mod.default);
+
+        let heroImage: string | undefined;
+        if (matches.length > 0) {
+            const optimized = await getImage({ src: matches[0], width: 600 });
+            heroImage = optimized.src;
+        }
+
+        return {
+            ...item,
+            ...item.data,
+            keywords: item.data.tags,
+            tagline: item.data.description,
+            images: heroImage ? [heroImage] : [],
+            heroImage,
+        } as projectConfig & { heroImage?: string };
+    }),
+);
+---
+
+<IndexLayout title="Projects - Little Seal Studio" description="리틀실스튜디오가 직접 디자인하고 개발한 사이드 프로젝트 및 외주 내역 아카이브" image="/og/default.png">
+    <div transition:animate="fade">
+        <IndexHeader url="/" heading="Projects" />
+
+        <div class="mt-3">
+            <FilterProjects client:load items={enriched} />
+        </div>
+    </div>
+</IndexLayout>
