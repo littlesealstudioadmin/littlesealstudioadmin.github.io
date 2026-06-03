@@ -41,5 +41,5 @@ export default defineConfig({
     defaultStrategy: "hover",
   },
 
-  site: "https://littleseal.studio",
+  site: "https://littlesealstudioadmin.github.io",
 });
