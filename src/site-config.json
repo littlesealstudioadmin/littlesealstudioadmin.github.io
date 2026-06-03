@@ -1,6 +1,6 @@
 {
   "github": { "owner": "littlesealstudioadmin", "repo": "littlesealstudioadmin.github.io" },
-  "domain": "https://littlesealstudioadmin.github.io",
+  "domain": "https://littlesealstudio.kr",
   "bNavigation": true,
   "homeLabel": "home",
   "navigationItems": ["projects", "blog", "service"],

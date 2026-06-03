@@ -19,6 +19,7 @@ touch .nojekyll
 echo "🌐 Initializing temporary git repository in dist..."
 git init
 git checkout -b main
+git config http.postBuffer 524288000
 git add -A
 git commit -m "deploy: static build release ($(date +'%Y-%m-%d %H:%M:%S'))"
 
