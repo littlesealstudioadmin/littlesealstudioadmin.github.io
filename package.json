@@ -39,7 +39,8 @@
     "build:serve": "astro build && npx -y pagefind --site dist --serve",
     "preview": "astro preview",
     "astro": "astro",
-    "prepare": "husky"
+    "prepare": "husky",
+    "deploy": "./deploy.sh"
   },
   "dependencies": {
     "@astrojs/react": "^5.0.2",
