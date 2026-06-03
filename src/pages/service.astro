@@ -240,11 +240,11 @@ const specData = {
                 <table class="w-full text-left border-collapse border border-border">
                     <thead id="spec-table-header">
                         <tr class="bg-muted font-mono text-xs uppercase text-foreground border-b border-border">
-                            <th class="p-3 border-r border-border min-w-[180px] md:min-w-[220px] whitespace-nowrap">제공 기능 및 스펙</th>
+                            <th class="p-3 border-r border-border min-w-[180px] md:min-w-[220px] whitespace-nowrap sticky left-0 bg-muted z-20">제공 기능 및 스펙</th>
                             {specData.website.tiers.map(tier => (
                                 <th class="p-3 border-r border-border text-center whitespace-nowrap">
                                     <div class="font-bold text-sm text-foreground">{tier.name}</div>
-                                    <div class="font-mono text-xs text-muted-foreground mt-0.5">{tier.price}</div>
+                                    <div class="font-mono text-sm font-extrabold text-foreground mt-1">{tier.price}</div>
                                 </th>
                             ))}
                         </tr>
@@ -252,7 +252,7 @@ const specData = {
                     <tbody class="text-sm divide-y divide-border font-mono" id="spec-table-body">
                         {specData.website.features.map(feature => (
                             <tr class="hover:bg-muted/5 transition-colors">
-                                <td class="p-3 border-r border-border font-sans font-bold whitespace-nowrap">{feature.name}</td>
+                                <td class="p-3 border-r border-border font-sans font-bold whitespace-nowrap sticky left-0 bg-background z-10">{feature.name}</td>
                                 {feature.values.map((val) => (
                                     <td class={`p-3 border-r last:border-r-0 border-border text-center whitespace-nowrap ${val === '✓' || val.startsWith('✓') ? 'text-foreground font-bold' : val === '-' ? 'text-muted-foreground/30' : 'text-foreground/90'}`}>
                                         {val}
@@ -520,11 +520,11 @@ const specData = {
             if (specTableHeader) {
                 specTableHeader.innerHTML = `
                     <tr class="bg-muted font-mono text-xs uppercase text-foreground border-b border-border">
-                        <th class="p-3 border-r border-border min-w-[180px] md:min-w-[220px] whitespace-nowrap">제공 기능 및 스펙</th>
+                        <th class="p-3 border-r border-border min-w-[180px] md:min-w-[220px] whitespace-nowrap sticky left-0 bg-muted z-20">제공 기능 및 스펙</th>
                         ${data.tiers.map((tier, idx) => `
                             <th class="p-3 border-r last:border-r-0 border-border text-center whitespace-nowrap">
                                 <div class="font-bold text-sm text-foreground">${tier.name}</div>
-                                <div class="font-mono text-xs text-muted-foreground mt-0.5">${tier.price}</div>
+                                <div class="font-mono text-sm font-extrabold text-foreground mt-1">${tier.price}</div>
                             </th>
                         `).join('')}
                     </tr>
@@ -535,7 +535,7 @@ const specData = {
             if (specTableBody) {
                 specTableBody.innerHTML = data.features.map(feature => `
                     <tr class="hover:bg-muted/5 transition-colors">
-                        <td class="p-3 border-r border-border font-sans font-bold whitespace-nowrap">${feature.name}</td>
+                        <td class="p-3 border-r border-border font-sans font-bold whitespace-nowrap sticky left-0 bg-background z-10">${feature.name}</td>
                         ${feature.values.map(val => {
                             const isCheck = val === '✓' || val.startsWith('✓');
                             const isDash = val === '-';
