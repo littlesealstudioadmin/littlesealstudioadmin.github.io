@@ -139,4 +139,31 @@
             @apply accent-foreground;
         }
     }
+
+    /* 법적 문서(개인정보처리방침·이용약관)용 컴팩트 변형 — 블로그용 대형 세리프 대신
+       고지문에 맞는 산세리프·작은 제목을 쓴다. LegalDoc.astro 에서만 사용. */
+    .prose.prose-legal {
+        @apply font-sans;
+
+        h2 {
+            @apply text-xl font-bold border-b-2 border-foreground pb-3 mt-10 mb-4;
+        }
+        h2:first-child {
+            @apply mt-0;
+        }
+        p,
+        li {
+            @apply text-sm text-muted-foreground leading-relaxed;
+        }
+        ul,
+        ol {
+            @apply mt-3 mb-5 space-y-2;
+        }
+        strong {
+            @apply text-foreground/90 font-semibold;
+        }
+        blockquote {
+            @apply mt-10;
+        }
+    }
 }

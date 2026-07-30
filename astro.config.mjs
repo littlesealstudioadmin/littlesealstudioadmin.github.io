@@ -20,7 +20,10 @@ export default defineConfig({
       autoTheme: true,
     }),
     react(),
-    sitemap(),
+    sitemap({
+      // CMS 관리자 페이지는 검색엔진에 노출하지 않는다
+      filter: (page) => !page.includes("/admin"),
+    }),
   ],
 
   markdown: {

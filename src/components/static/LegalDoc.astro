@@ -1,0 +1,79 @@
+---
+import IndexLayout from "@/layouts/IndexLayout.astro";
+import IndexHeader from "@/components/static/IndexHeader.astro";
+import site_config from "@/site-config.json";
+import { getCollection, render } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+
+// 개인정보처리방침 · 이용약관 공용 렌더러.
+// 문서 내용은 src/content/legal/ 의 md 파일이 전담하고, 이 컴포넌트는 껍데기만 담당한다.
+interface Props {
+    doc: CollectionEntry<"legal">;
+}
+
+const { doc } = Astro.props;
+const { Content } = await render(doc);
+
+const kindMeta = {
+    privacy: { docTitle: "개인정보처리방침", heading: "Privacy" },
+    terms: { docTitle: "이용약관", heading: "Terms" },
+} as const;
+const meta = kindMeta[doc.data.kind];
+
+// 같은 프로젝트에 반대쪽 문서가 있으면 상단에서 서로 오갈 수 있게 한다.
+const siblingKind = doc.data.kind === "privacy" ? "terms" : "privacy";
+const sibling = (await getCollection("legal")).find(
+    (d) => !d.data.draft && d.data.project === doc.data.project && d.data.kind === siblingKind
+);
+
+const emailItem = site_config.introduction.subHeadingItems.find((item) => item.type === "mail");
+const email = emailItem?.label ?? "littlesealstudio@gmail.com";
+const emailUrl = emailItem?.url ?? `mailto:${email}`;
+---
+
+<IndexLayout
+    title={`${doc.data.appName} ${meta.docTitle} | 리틀실스튜디오`}
+    description={doc.data.summary}
+    image="/og/default.png"
+>
+    <div transition:animate="fade" class="space-y-8 font-sans">
+        <IndexHeader url="/" heading={meta.heading} />
+
+        <section class="border border-border p-8 bg-card">
+            <p class="text-xs font-mono text-muted-foreground">{doc.data.eyebrow ?? doc.data.appName}</p>
+            <h2 class="text-3xl font-semibold leading-tight text-foreground/90 mt-3">{meta.docTitle}</h2>
+            <p class="text-base text-muted-foreground leading-relaxed mt-4">{doc.data.summary}</p>
+            <div class="flex flex-wrap items-center gap-x-6 gap-y-2 mt-6">
+                <p class="text-xs text-muted-foreground/80 font-mono">최종 수정일 · {doc.data.updatedAt}</p>
+                {
+                    sibling && (
+                        <a
+                            href={`/${siblingKind}/${doc.data.project}`}
+                            class="text-xs font-mono text-muted-foreground hover:text-foreground/90 underline underline-offset-4 animation"
+                        >
+                            {doc.data.appName} {kindMeta[siblingKind].docTitle} →
+                        </a>
+                    )
+                }
+            </div>
+        </section>
+
+        <section class="border border-border p-6 md:p-8 bg-background">
+            <div class="prose prose-legal">
+                <Content />
+            </div>
+        </section>
+
+        <section class="border border-border p-6 bg-muted/5">
+            <p class="text-sm text-muted-foreground">
+                문의 ·
+                <a
+                    href={emailUrl}
+                    class="hover:text-foreground/90 hover:underline underline-offset-4 animation"
+                >
+                    {email}
+                </a>
+            </p>
+        </section>
+    </div>
+</IndexLayout>

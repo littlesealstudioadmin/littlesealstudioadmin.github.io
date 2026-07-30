@@ -56,7 +56,7 @@ import { Tilt } from "../client/Tilt";
                     {
                         site_config.introduction.ctaItems &&
                             site_config.introduction.ctaItems.map((cta) => (
-                                <a href={cta.url} target="_blank" rel="noopener noreferrer" class={`${buttonVariants({ variant: cta.variant as siteConfig["introduction"]["ctaItems"][number]["variant"], size: "default" })} group`}>
+                                <a href={cta.url} target={cta.url.startsWith("http") ? "_blank" : undefined} rel={cta.url.startsWith("http") ? "noopener noreferrer" : undefined} class={`${buttonVariants({ variant: cta.variant as siteConfig["introduction"]["ctaItems"][number]["variant"], size: "default" })} group`}>
                                     <span class="space-y-6 leading-relaxed opacity-90 text-sm translate-x-0.5">{cta.label}</span>
                                     <RiArrowRightLine className="size-0 group-hover:size-4 animation" />
                                 </a>

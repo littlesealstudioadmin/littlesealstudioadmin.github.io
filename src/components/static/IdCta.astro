@@ -1,26 +1,37 @@
 ---
 import { buttonVariants } from "../ui/button";
 import { SocialIcon } from "@/lib/icons";
+import site_config from "@/site-config.json";
 
 const { type } = Astro.props;
+
+// URL 을 컴포넌트에 박아두면 site-config 와 어긋난다 (이전 버전이 실제로 그랬다).
+// 소셜 주소는 site-config.json 한 곳에서만 관리한다.
+const social = site_config.introduction.socialItems;
+const instagram = social.find((item) => item.type === "instagram")?.url;
+const youtube = social.find((item) => item.type === "youtube")?.url;
+
+const message = type === "blog" ? "재밌게 읽으셨나요?" : "프로젝트가 마음에 드시나요?";
 ---
 
 {
-    type === "blog" ? (
-        <div class="flex flex-col items-center justify-center gap-3 border border-border p-6 w-fit mx-auto mb-6">
-            <p class="text-secondary-foreground/80">재밌게 읽으셨나요?</p>
-            <a href="https://medium.com" target="_blank" rel="noopener noreferrer" class={`flex items-center justify-center gap-2 ${buttonVariants({ variant: "default" })}`}>
-                <SocialIcon type="medium" className="size-6" />
-                <span>Medium에서 구독하기</span>
-            </a>
-        </div>
-    ) : (
-        <div class="flex flex-col items-center justify-center gap-3 border border-border p-6 w-fit mx-auto mb-6">
-            <p class="text-secondary-foreground/80">프로젝트가 마음에 드시나요?</p>
-            <a href="https://github.com/createogu" target="_blank" rel="noopener noreferrer" class={`flex items-center justify-center gap-2 ${buttonVariants({ variant: "default" })}`}>
-                <SocialIcon type="github" className="size-6" />
-                <span>GitHub 팔로우하기</span>
-            </a>
+    (instagram || youtube) && (
+        <div class="flex flex-col items-center justify-center gap-4 border border-border p-6 w-fit mx-auto mb-6">
+            <p class="text-secondary-foreground/80">{message}</p>
+            <div class="flex flex-wrap items-center justify-center gap-3">
+                {instagram && (
+                    <a href={instagram} target="_blank" rel="noopener noreferrer" class={`flex items-center justify-center gap-2 ${buttonVariants({ variant: "default" })}`}>
+                        <SocialIcon type="instagram" className="size-6" />
+                        <span>인스타그램</span>
+                    </a>
+                )}
+                {youtube && (
+                    <a href={youtube} target="_blank" rel="noopener noreferrer" class={`flex items-center justify-center gap-2 ${buttonVariants({ variant: "outline" })}`}>
+                        <SocialIcon type="youtube" className="size-6" />
+                        <span>유튜브</span>
+                    </a>
+                )}
+            </div>
         </div>
     )
 }

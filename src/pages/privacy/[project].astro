@@ -1,0 +1,17 @@
+---
+import { getCollection } from "astro:content";
+import LegalDoc from "@/components/static/LegalDoc.astro";
+
+// 스토어 심사에 제출하는 URL(/privacy/<project>)이므로 경로 구조를 바꾸지 말 것.
+export async function getStaticPaths() {
+    const docs = await getCollection("legal", ({ data }) => data.kind === "privacy" && !data.draft);
+    return docs.map((doc) => ({
+        params: { project: doc.data.project },
+        props: { doc },
+    }));
+}
+
+const { doc } = Astro.props;
+---
+
+<LegalDoc doc={doc} />
